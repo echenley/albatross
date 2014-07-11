@@ -1,0 +1,1 @@
+!function(n){function e(e){var t=n(".sidebar, .menu-toggle");t.is(e.target)||0!==t.has(e.target).length||n(".container").removeClass("slide")}function t(){n(".menu-toggle").click(function(){n(".container").toggleClass("slide")}),n(document).mouseup(function(n){e(n)}).on("touchend",function(n){e(n)})}function o(){t()}o()}(jQuery);
