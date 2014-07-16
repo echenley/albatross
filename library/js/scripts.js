@@ -10,7 +10,7 @@ var $document = $(document),
 	$dynamic = $('#dynamic'),
 	$content = $('.content'),
 	$sidebar = $('.sidebar'),
-	site_url = location.protocol + '//' + top.location.host.toString(),
+	site_url = albatross_vars.site_url || location.protocol + '//' + top.location.host.toString(),
 	// current_url = location.protocol + '//' + location.host + location.pathname,
 	$internal_links = $('a[href^="' + site_url + '"], a[href^="/"], a[href^="./"], a[href^="../"]');
 
