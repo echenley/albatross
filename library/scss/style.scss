@@ -534,7 +534,7 @@ iframe {
     width: 100%;
 }
 
-.post img:not(.icon) {
+.post img:not(.icon):not(.alignright):not(.alignleft) {
     display: block;
 	height: auto;
 	max-width: 100%;
