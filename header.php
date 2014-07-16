@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html <?php language_attributes() ?>>
+<html <?php language_attributes() ?> style="background: url(<?php header_image(); ?>) fixed no-repeat center center; background-size: cover;">
     <head>
         <meta charset="<?php bloginfo('charset'); ?>" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,7 +7,6 @@
         <?php wp_head(); ?>
     </head>
     <body <?php body_class(); ?>>
-        <div class="cover-image" style="background: url(<?php header_image(); ?>) fixed no-repeat center center; background-size: cover;"></div>
         <div class="container cf">
 
             <?php get_template_part('partials/sidebar'); ?>
