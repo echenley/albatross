@@ -6,8 +6,8 @@
         <title><?php wp_title('|', true, 'right'); ?></title>
         <?php wp_head(); ?>
     </head>
-    <body <?php body_class(); ?> style="background: url(<?php header_image(); ?>) fixed no-repeat center center; background-size: cover;";>
-
+    <body <?php body_class(); ?>>
+        <div class="cover-image" style="background: url(<?php header_image(); ?>) fixed no-repeat center center; background-size: cover;"></div>
         <div class="container cf">
 
             <?php get_template_part('partials/sidebar'); ?>

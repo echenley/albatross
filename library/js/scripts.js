@@ -1,17 +1,16 @@
 (function($) {
 
 
-
 /* Global Variables
 ================================== */
 
-var $document = $(document),
-	$all_videos = $('iframe[src*="//www.youtube.com"], iframe[src*="//player.vimeo.com"]'),
+// albatross_vars defined via wp_localize_script
+var site_url = albatross_vars.site_url,
+	$document = $(document),
 	$dynamic = $('#dynamic'),
 	$content = $('.content'),
 	$sidebar = $('.sidebar'),
-	site_url = albatross_vars.site_url || location.protocol + '//' + top.location.host.toString(),
-	// current_url = location.protocol + '//' + location.host + location.pathname,
+	$all_videos = $('iframe[src*="//www.youtube.com"], iframe[src*="//player.vimeo.com"]'),
 	$internal_links = $('a[href^="' + site_url + '"], a[href^="/"], a[href^="./"], a[href^="../"]');
 
 
@@ -133,36 +132,36 @@ function load_new_page(url, popstate) {
 		popstate = false;
 	}
 
-		$.get(url, function(new_page) {
-			var $new_page = $(new_page),
-				new_content = $('#dynamic', $new_page).html(),
-				new_title = $new_page.filter('title').text();
+	$.get(url, function(new_page) {
+		var $new_page = $(new_page),
+			new_content = $('#dynamic', $new_page).html(),
+			new_title = $new_page.filter('title').text();
 
-			if (typeof history.pushState === "undefined") {
-				// Refresh the page to the new URL if pushState not supported
-				location.href = url;
-			}
+		if (typeof history.pushState === "undefined") {
+			// Refresh the page to the new URL if pushState not supported
+			location.href = url;
+		}
 
-			// update the history
-			if (!popstate) {
-				update_history(url, new_title);
-			}
-			// load the content
-			$dynamic.html(new_content);
+		// update the history
+		if (!popstate) {
+			update_history(url, new_title);
+		}
+		// load the content
+		$dynamic.html(new_content);
 
-			// if going to homepage
-			if (url.slice(0,-1) === site_url) {
-				position_vertically();
-				$dynamic.addClass('cover');
-			} else {
-				$dynamic.removeClass('cover');
-			}
+		// if going to homepage
+		if (url.slice(0,-1) === site_url) {
+			position_vertically();
+			$dynamic.addClass('cover');
+		} else {
+			$dynamic.removeClass('cover');
+		}
 
-			
-		}).done(function() {
-			$sidebar.addClass('transparent');
-			$dynamic.removeClass('slide');
-		});
+		
+	}).done(function() {
+		$sidebar.addClass('transparent');
+		$dynamic.removeClass('slide');
+	});
 }
 
 
