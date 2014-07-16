@@ -128,13 +128,21 @@ $monospace: Consolas, Monaco, 'Andale Mono', monospace;
 ====================================== */
 
 html,
-body,
+body{
+	height: 100%;
+}
+
 .container,
 .content {
 	min-height: 100vh;
 }
 
+html {
+}
+
 body {
+	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
 	font-family: $sans-serif;
 	font-size: $font-size;
 	font-weight: 300;
