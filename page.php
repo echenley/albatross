@@ -1,4 +1,5 @@
 <?php get_header(); ?>
+<?php get_template_part('partials/content-header'); ?>
 
 <div class="post">
 	<h1 class="post-title"><?php the_title(); ?></h1>

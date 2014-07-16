@@ -69,13 +69,13 @@ add_action('wp_enqueue_scripts', 'albatross_scripts', 11);
 function albatross_scripts() {
 
     // CSS //
-    wp_enqueue_style( 'albatross-fonts', albatross_font_url(), array(), null );
+    wp_enqueue_style('albatross-fonts', albatross_font_url(), array(), null);
     wp_enqueue_style('albatross-style', get_template_directory_uri() . '/library/css/style.css');
         
     // Javascript //
     wp_enqueue_script('albatross-scripts', get_template_directory_uri() . '/library/js/scripts-min.js', array('jquery'), '', true);
 
-    if ( is_singular() && comments_open() && get_option('thread_comments') ) {
+    if (is_singular() && comments_open() && get_option('thread_comments')) {
         wp_enqueue_script('comment-reply');
 	}
 }
@@ -88,8 +88,8 @@ function albatross_font_url() {
      * Translators: If there are characters in your language that are not supported
      * by the current font, translate this to 'off'. Do not translate into your own language.
      */
-    if ( 'off' !== _x( 'on', 'Open Sans font: on or off', 'albatross' ) )
-        $font_url = add_query_arg( 'family', urlencode( 'Poiret One|Open Sans:300,400,300italic' ), '//fonts.googleapis.com/css' );
+    if ('off' !== _x( 'on', 'Open Sans font: on or off', 'albatross'))
+        $font_url = add_query_arg('family', urlencode( 'Poiret One|Open Sans:300,400,300italic' ), '//fonts.googleapis.com/css');
     
     return $font_url;
 }
@@ -100,8 +100,8 @@ function albatross_categories() {
     $categories = get_the_category();
     $separator = ', ';
     $output = _n('Topic', 'Topics', count($categories), 'albatross') . ': ';
-    if($categories) {
-        foreach($categories as $category) {
+    if ($categories) {
+        foreach ($categories as $category) {
             $output .= '<a href="' . get_category_link( $category->term_id ) . '"';
             $output .= ' title="' . esc_attr( sprintf( __('View all posts in %s', 'albatross'), $category->name ) ) . '">' . $category->cat_name . '</a>' . $separator;
         }

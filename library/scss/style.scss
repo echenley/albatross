@@ -10,7 +10,7 @@ Author URI: http://henleyedition.com/
 // colors
 $primary-dark:     #000;
 $primary-light:    #fff;
-$primary-color:    #708288;
+$primary-color:    #537FC1;
 $line-color:       #dadbe6;
 $link:             $primary-color;
 $highlight:        #f5f2f5;
@@ -22,13 +22,12 @@ $margin-medium: 1.6rem;
 $margin-small:  1rem;
 
 // dimensions
-$container-width:      1280px;
-$sidebar-width:        32%;
+$container-width:      767px;
+$sidebar-width:        400px;
 $sidebar-width-mobile: 70%;
-$content-width:        100% - $sidebar-width;
 
 // media query breakpoints
-$breakpoints: (768px,1280px);
+$breakpoints: (767px,1280px);
 
 
 /* Typography
@@ -38,7 +37,7 @@ $font-size: 100%;
 $line-height: 1.6;
 
 $serif: "Poiret One", "Times New Roman", serif;
-$sans-serif: "Lato", sans-serif;
+$sans-serif: "Open Sans", sans-serif;
 $monospace: Consolas, Monaco, 'Andale Mono', monospace;
 
 
@@ -139,36 +138,39 @@ body {
 	font-family: $sans-serif;
 	font-size: $font-size;
 	font-weight: 300;
-	background: $primary-color;
 	@media screen and (min-width: nth($breakpoints, 1)) {
 		font-size: $font-size * 1.1;
-		background: $primary-light;
-	}	
+	}
 }
 
 .container {
     width: 100%;
-    float: right;
+    margin: 0 auto;
     max-width: $container-width;
-	background: $primary-color;
-	@include transition(transform 0.3s);
-	transform: translate3d(0,0,0);
-	@media screen and (max-width: nth($breakpoints,1)) {
-		&.slide  {
-			transform: translate3d(-$sidebar-width-mobile,0,0) rotate(2deg);
-		}
-	}
 }
 
 .content {
 	width: 100%;
 	padding: 5%;
+	@include transition(all 0.3s);
+	transform: translate3d(0,0,0);
 	background: $primary-light;
+	&.slide  {
+		transform: translate3d(-$sidebar-width-mobile,0,0);
+	}
 	@media screen and (min-width: nth($breakpoints, 1)) {
-		width: $content-width;
-		padding: $margin-large;
+		&.slide  {
+			transform: translate3d(-$sidebar-width,0,0);
+		}
+	}
+
+	&.cover {
+		background: transparent;
+		text-align: center;
+		padding: 0 5%;
 	}
 }
+
 
 
 /* Sidebar
@@ -176,30 +178,21 @@ body {
 
 .sidebar {
 	position: fixed;
-	right: 0;
 	width: $sidebar-width-mobile;
+	margin-left: 100% - $sidebar-width-mobile;
 	padding: $margin-medium 0;
-	background: $primary-color;
-	color: $primary-light;
-	a { color: $primary-light; }
+	background: $primary-light;
 	@media screen and (min-width: nth($breakpoints, 1)) {
-		z-index: 2;
-		width: $sidebar-width;
-		max-width: $container-width * $sidebar-width / 100%;
+		max-width: $sidebar-width;
+		margin-left: $container-width - $sidebar-width;
 	}
-}
-
-.cover-photo {
-	width: 60%;
-	padding-top: 60%;
-	border-radius: 50%;
-	border: 1px solid $gray;
-	margin: 0 auto;
+	@include transition(opacity 0.3s);
 }
 
 .site-title {
 	display: block;
-	margin: $margin-medium $margin-small $margin-small $margin-small;
+	margin: $margin-small;
+	margin-top: 0;
 	@extend %text-align-center;
 	font-size: 1.8em;
 	line-height: 1.1;
@@ -214,7 +207,7 @@ body {
 }
 
 .primary-menu {
-	margin: $margin-large 0;
+	margin: $margin-large 0 0 0;
 }
 
 .primary-menu,
@@ -223,9 +216,8 @@ body {
 	list-style: none;
 }
 
-.primary-menu .current-menu-item a {
-	background: lighten($primary-color, 4%);
-
+.primary-menu .current_page_item a {
+	text-decoration: underline;
 	&:before {
 		position: absolute;
 		left: $margin-small;
@@ -237,11 +229,6 @@ body {
 	display: block;
 	padding: 10px;
 	text-align: center;
-	@extend %transition-300ms;
-	&:hover {
-		text-decoration: none;
-		background: lighten($primary-color, 4%);
-	}
 }
 
 .content-header {
@@ -253,9 +240,6 @@ body {
 	font-family: $serif;
 	a {
 		color: $primary-light;
-	}
-	@media screen and (min-width: nth($breakpoints, 1)) {
-		display: none;
 	}
 }
 
@@ -269,19 +253,24 @@ body {
 	}
 }
 
-.title-link-mobile {}
-
-// .theme-credit {
-// 	margin: $margin-large 0 0 0;
-// 	background: $primary-light;
-// 	font-size: 0.8em;
-// 	@extend %text-align-center;
-// 	a { color: $gray; }
-// }
-
-
-/* Footer
+/* Cover Page
 ====================================== */
+
+.cover-nav {
+	@extend %transition-300ms;
+	position: relative;
+	display: inline-block;
+	padding: $margin-medium 0;
+	background: $primary-light;
+}
+
+.cover-image {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
 
 
 /* Blog Index
@@ -292,9 +281,6 @@ body {
 	text-align: center;
 	margin: $margin-large 0;
 	color: $primary-color;
-	@media screen and (min-width: nth($breakpoints, 1)) {
-		margin-top: $margin-small;
-	}
 }
 
 .pagination {
@@ -402,7 +388,7 @@ h2,h3,h4,h5,h6 {
 	line-height: 1.2;
 }
 
-h1,h2 {
+h1:not(.site-title),h2 {
 	color: $primary-color;
 	border-bottom: 1px solid $primary-color;
 }
@@ -511,13 +497,20 @@ em {
 }
 
 hr {
-	margin: $margin-large 0;
-	border: 0;
+	max-width: 100px;
+	height: 0;
+	margin: $margin-large auto;
+	border: none;
+	border-top: 1px solid $primary-color;
 	text-align: center;
 	color: $primary-color;
-	font-size: 1.4em;
 	&:before {
-		content: "\2014\20\00a7\20\2014";
+	    display: inline-block;
+	    position: relative;
+		top: -0.55em;
+		width: 30px;
+		background: $primary-light;
+		content: "\a7";
 	}
 }
 
@@ -539,6 +532,7 @@ iframe {
     margin: $margin-medium auto;
     width: 100%;
 }
+
 .post img:not(.icon) {
     display: block;
 	height: auto;
@@ -546,9 +540,11 @@ iframe {
     margin: $margin-medium auto;
 	@extend %border-radius;
 }
+
 p {
 	@extend %standard-margin;
 }
+
 pre {
 	@extend %standard-margin;
 	padding: 1em;
@@ -563,19 +559,16 @@ pre {
 		white-space: pre-wrap;
 	}
 }
+
 time {}
-strong {
-	font-weight: 400;
-}
+strong { font-weight: 400; }
 sup, sub {
    vertical-align: baseline;
    position: relative;
    top: -0.4em;
    font-size: 0.8em;
 }
-sub {
-	top: 0.4em;
-}
+sub { top: 0.4em; }
 
 
 /* Helper Classes
@@ -640,41 +633,53 @@ sub {
 
 .pullquote {
 	float: right;
-	@extend img.align-right;
+	@extend img.alignright;
 	border-left: none;
 	border-right: $margin-small/2 solid rgba($primary-color,0.8);
 	font-size: 1.3em;
 }
 
+.transparent {
+	opacity: 0;
+}
+
+// IMAGES
+
 .full-width {
 	width: 100%;
 }
 
-.align-left {
+.alignleft {
 	float: left;
 }
-.align-right {
+.alignright {
 	float: right;
 }
 
+.post-body img {
+    display: block;
+	height: auto;
+	@extend %max-width;
+    margin: $margin-medium auto;
+}
 
-img.align-left, .caption.align-left,
-img.align-right, .caption.align-right {
+img.alignleft, .caption.alignleft,
+img.alignright, .caption.alignright {
     max-width: 50% !important;
 }
 
-img.align-right, .caption.align-right {
+img.alignright, .caption.alignright {
     margin: 0.9rem 0 0.9rem $margin-medium;
 }
 
-img.align-left, .caption.align-left {
+img.alignleft, .caption.alignleft {
     margin: 0.9rem $margin-medium 0.9rem 0;
 }
 
 
 @media screen and (max-width: nth($breakpoints, 1)) {
-	img.align-left, .caption.align-left,
-	img.align-right, .caption.align-right {
+	img.alignleft, .caption.alignleft,
+	img.alignright, .caption.alignright {
 		float: none;
 		max-width: 100% !important;
 		margin: $margin-medium auto !important;
