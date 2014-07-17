@@ -191,7 +191,6 @@ function add_js($doc, run) {
 			}
 		}
 	});
-	window.alert(js_loaded);
 }
 
 
