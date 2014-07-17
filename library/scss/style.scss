@@ -301,11 +301,9 @@ body {
 			position: absolute;
 		}
     }
-    .next:after,
-    .prev:before {
-        display: inline-block;
-        content: '\21E7';
-        font-size: 14px;
+    .prev:before,
+    .next:after {
+    	display: inline-block;
     }
     .prev {
 		float: left;
@@ -313,8 +311,8 @@ body {
 	        left: 0;
 		}
         &:before {
+        	content: "\2190";
             margin-right: 6px;
-            @include prefix(transform, rotate(-90deg));
         }
     }
     .next {
@@ -323,8 +321,9 @@ body {
 	        right: 0;
 		}
         &:after {
+        	display: inline-block;
+        	content: "\2192";
             margin-left: 6px;
-            @include prefix(transform, rotate(90deg));
         }
     }
     > *:not(.next):not(.prev) {
