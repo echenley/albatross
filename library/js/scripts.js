@@ -151,7 +151,7 @@ function load_new_page(url, popstate) {
 		var albascripts = new_page.replace(/<script/gi, '<albascript');
 		// run any new js
 		add_js($(albascripts).filter('albascript'), true);
-		add_css($('link', $new_page), true);
+		add_css($new_page.filter('link[rel="stylesheet"]'), true);
 
 		if (typeof history.pushState === "undefined") {
 			// Refresh the page to the new URL if pushState not supported
@@ -202,7 +202,7 @@ function add_css($styles, run) {
 	// add all <style> src attributes to external_css
 	$styles.each(function() {
 		var href = $(this).attr('href');
-		if (href && $.inArray(href, external_css) === -1) {
+		if ($.inArray(href, external_css) === -1) {
 			external_css.push(href);
 			if (run) {
 				$('head').append('<link rel="stylesheet" type="text/css" href="' + href + '">');
