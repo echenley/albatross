@@ -230,7 +230,7 @@ function init() {
 	// keep track of js files
 	add_js($('script'), false);
 	// keep track of css files
-	add_css($('link'), false);
+	add_css($('link[rel="stylesheet"]'), false);
 
 }
 
