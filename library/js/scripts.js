@@ -89,6 +89,10 @@ function update_history(link, new_title) {
 /* Dynamic Content
 ================================== */
 
+function page_scroll(scrollto, speed) {
+	$('html,body').stop().animate({ scrollTop: scrollto }, speed);
+}
+
 function toggle_sidebar(e) {
     var container = $('.sidebar, .menu-toggle');
     if (!container.is(e.target) && container.has(e.target).length === 0) {
@@ -119,6 +123,10 @@ function activate_internal_links() {
 		load_new_page(href);
 		$('a[href="' + href + '"').addClass('current_link').parent().addClass('current_page_item');
 		e.preventDefault();
+	});
+
+	$document.on('click', '.page-numbers', function() {
+		page_scroll(0, 500);
 	});
 }
 
