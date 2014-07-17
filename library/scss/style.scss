@@ -10,7 +10,7 @@ Author URI: http://henleyedition.com/
 // colors
 $primary-dark:     #000;
 $primary-light:    #fff;
-$primary-color:    #537FC1;
+$primary-color:    #4C656D;
 $line-color:       #dadbe6;
 $link:             $primary-color;
 $highlight:        #f5f2f5;
@@ -197,6 +197,7 @@ body {
 	@extend %text-align-center;
 	font-size: 1.8em;
 	line-height: 1.1;
+	color: $primary-color;
 	@media screen and (min-width: nth($breakpoints, 1)) {
 		font-size: 2.1em;
 	}
@@ -376,7 +377,7 @@ body {
 ====================================== */
 
 h1,h2,h3,h4,h5,h6,
-.title-link-mobile {
+.content-header-title {
 	font-family: $serif;
 	font-weight: 300;
 	clear: both;

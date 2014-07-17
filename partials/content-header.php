@@ -1,5 +1,5 @@
 <div class="content-header cf">
-    <a href="<?php echo esc_url(home_url('/')); ?>" class="title-link-mobile"><?php bloginfo('name'); ?></a>
+    <a href="<?php echo esc_url(home_url('/')); ?>" class="content-header-title"><?php bloginfo('name'); ?></a>
     <?php
         if (is_home() || is_single()) {
             // blog page
