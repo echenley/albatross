@@ -1,4 +1,4 @@
-<header class="sidebar">
+<header class="sidebar transparent">
     <h1 class="site-title">
         <a href="<?php echo esc_url(home_url('/')); ?>" class="title-link"><?php bloginfo('name'); ?></a>
     </h1>

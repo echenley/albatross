@@ -178,8 +178,6 @@ function init() {
 	// 	header_image_url = header_image_url.replace('url(','').replace(')','');
 	// }
 
-	// hide sidebar
-	$sidebar.addClass('transparent');
 	// set onpopstate AND initial app state if there isn't one set (e.g. after reload)
 	set_history();
 	// position sidebar/cover-nav vertically

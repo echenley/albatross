@@ -260,6 +260,7 @@ body {
 .cover-nav {
 	@extend %transition-300ms;
 	position: relative;
+	margin-top: 10%;
 	display: inline-block;
 	padding: $margin-medium 0;
 	background: $primary-light;
