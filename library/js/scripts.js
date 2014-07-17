@@ -11,7 +11,8 @@ var site_url = albatross_vars.site_url,
 	$content = $('.content'),
 	$sidebar = $('.sidebar'),
 	$all_videos = $('iframe[src*="//www.youtube.com"], iframe[src*="//player.vimeo.com"]'),
-	$internal_links = $('a[href^="' + site_url + '"], a[href^="/"], a[href^="./"], a[href^="../"]');
+	$internal_links = $('a[href^="' + site_url + '"], a[href^="/"], a[href^="./"], a[href^="../"]'),
+	js_loaded = [];
 
 
 /* Page Setup
@@ -169,22 +170,32 @@ function load_new_page(url, popstate) {
 	}).done(function() {
 		$sidebar.addClass('transparent');
 		$dynamic.removeClass('slide');
+		add_js();
 	});
 }
 
 
 
-/* Miscellaneous
+/* JavaScript Management
 ================================== */
 
+function add_js() {
+	var src;
+	// add all <script> src attributes to js_loaded
+	$('script').each(function() {
+		src = $(this).attr('src');
+		if ($.inArray(src, js_loaded) === -1) {
+			js_loaded.push(src);
+			$('body').append($(this));
+		}
+	});
+}
+
+
+/* Initialize
+================================== */
 
 function init() {
-
-	// // if there is a background-image, store it
-	// if ($body.css('background-image') !== 'none') {
-	// 	header_image_url = $body.css('background-image');
-	// 	header_image_url = header_image_url.replace('url(','').replace(')','');
-	// }
 
 	// set onpopstate AND initial app state if there isn't one set (e.g. after reload)
 	set_history();
@@ -196,6 +207,8 @@ function init() {
 	activate_internal_links();
 	// add click handlers for menu toggle
 	set_menu_toggle();
+	// keep track of js files
+	add_js();
 
 }
 
