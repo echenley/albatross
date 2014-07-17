@@ -180,10 +180,10 @@ function load_new_page(url, popstate) {
 /* JavaScript Management
 ================================== */
 
-function add_js($document) {
+function add_js($doc) {
 	var src;
 	// add all <script> src attributes to js_loaded
-	$('script', $document).each(function() {
+	$doc.filter('script').each(function() {
 		src = $(this).attr('src');
 		if ($.inArray(src, js_loaded) === -1) {
 			js_loaded.push(src);
