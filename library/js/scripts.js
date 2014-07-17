@@ -12,7 +12,7 @@ var site_url = albatross_vars.site_url,
 	$sidebar = $('.sidebar'),
 	$all_videos = $('iframe[src*="//www.youtube.com"], iframe[src*="//player.vimeo.com"]'),
 	$internal_links = $('a[href^="' + site_url + '"], a[href^="/"], a[href^="./"], a[href^="../"]'),
-	js_loaded = [];
+	external_files = [];
 
 
 /* Page Setup
@@ -147,9 +147,10 @@ function load_new_page(url, popstate) {
 			new_title = $new_page.filter('title').text();
 
 		// hack to make scripts available to parse
-		var albascripts = new_page.replace(/<script/gi, '<albascript');
+		var albascripts = new_page.replace(/<script/gi, '<albascript'),
+			styles = $new_page.filter('style');
 		// run any new js
-		add_js($(albascripts).filter('albascript'), true);
+		add_files($(albascripts).filter('albascript').add(styles), true);
 
 		if (typeof history.pushState === "undefined") {
 			// Refresh the page to the new URL if pushState not supported
@@ -182,18 +183,18 @@ function load_new_page(url, popstate) {
 /* JavaScript Management
 ================================== */
 
-function add_js($scripts, run) {
-	// add all <script> src attributes to js_loaded
+function add_files($scripts, run) {
+	// add all <script> src attributes to external_files
 	$scripts.each(function() {
 		var src = $(this).attr('src');
-		if (src && $.inArray(src, js_loaded) === -1) {
-			js_loaded.push(src);
+		if (src && $.inArray(src, external_files) === -1) {
+			external_files.push(src);
 			if (run) {
 				$.getScript(src);
 			}
 		}
 	});
-	window.console.log(js_loaded);
+	window.console.log(external_files);
 }
 
 
@@ -213,7 +214,7 @@ function init() {
 	// add click handlers for menu toggle
 	set_menu_toggle();
 	// keep track of js files
-	add_js($('script'), false);
+	add_files($('script').add('style'), false);
 
 }
 
