@@ -12,7 +12,8 @@ var site_url = albatross_vars.site_url,
 	$sidebar = $('.sidebar'),
 	$all_videos = $('iframe[src*="//www.youtube.com"], iframe[src*="//player.vimeo.com"]'),
 	$internal_links = $('a[href^="' + site_url + '"], a[href^="/"], a[href^="./"], a[href^="../"]'),
-	external_files = [];
+	external_js = [],
+	external_css = [];
 
 
 /* Page Setup
@@ -147,10 +148,10 @@ function load_new_page(url, popstate) {
 			new_title = $new_page.filter('title').text();
 
 		// hack to make scripts available to parse
-		var albascripts = new_page.replace(/<script/gi, '<albascript'),
-			styles = $new_page.filter('style');
+		var albascripts = new_page.replace(/<script/gi, '<albascript');
 		// run any new js
-		add_files($(albascripts).filter('albascript').add(styles), true);
+		add_js($(albascripts).filter('albascript'), true);
+		add_css($('link', $new_page), true);
 
 		if (typeof history.pushState === "undefined") {
 			// Refresh the page to the new URL if pushState not supported
@@ -180,23 +181,36 @@ function load_new_page(url, popstate) {
 
 
 
-/* JavaScript Management
+/* External Resource Management
 ================================== */
 
-function add_files($scripts, run) {
-	// add all <script> src attributes to external_files
+function add_js($scripts, run) {
+	// add all <script> src attributes to external_js
 	$scripts.each(function() {
 		var src = $(this).attr('src');
-		if (src && $.inArray(src, external_files) === -1) {
-			external_files.push(src);
+		if (src && $.inArray(src, external_js) === -1) {
+			external_js.push(src);
 			if (run) {
 				$.getScript(src);
 			}
 		}
 	});
-	window.console.log(external_files);
+	window.console.log(external_js);
 }
 
+function add_css($styles, run) {
+	// add all <style> src attributes to external_css
+	$styles.each(function() {
+		var href = $(this).attr('href');
+		if (href && $.inArray(href, external_css) === -1) {
+			external_css.push(href);
+			if (run) {
+				$('head').append('<link rel="stylesheet" type="text/css" href="' + href + '">');
+			}
+		}
+	});
+	window.console.log(external_css);
+}
 
 /* Initialize
 ================================== */
@@ -214,7 +228,9 @@ function init() {
 	// add click handlers for menu toggle
 	set_menu_toggle();
 	// keep track of js files
-	add_files($('script').add('style'), false);
+	add_js($('script'), false);
+	// keep track of css files
+	add_css($('link'), false);
 
 }
 
