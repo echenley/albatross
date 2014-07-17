@@ -146,7 +146,7 @@ function load_new_page(url, popstate) {
 			new_content = $('#dynamic', $new_page).html(),
 			new_title = $new_page.filter('title').text();
 
-		add_js($new_page);
+		add_js($new_page, true);
 
 		if (typeof history.pushState === "undefined") {
 			// Refresh the page to the new URL if pushState not supported
@@ -168,7 +168,6 @@ function load_new_page(url, popstate) {
 			$dynamic.removeClass('cover');
 		}
 
-		
 	}).done(function() {
 		$sidebar.addClass('transparent');
 		$dynamic.removeClass('slide');
@@ -180,16 +179,19 @@ function load_new_page(url, popstate) {
 /* JavaScript Management
 ================================== */
 
-function add_js($doc) {
+function add_js($doc, run) {
 	var src;
 	// add all <script> src attributes to js_loaded
-	$doc.filter('script').each(function() {
+	$doc.find('script').each(function() {
 		src = $(this).attr('src');
-		if ($.inArray(src, js_loaded) === -1) {
+		if (src && $.inArray(src, js_loaded) === -1) {
 			js_loaded.push(src);
-			$.getScript(src);
+			if (run) {
+				$.getScript(src);
+			}
 		}
 	});
+	window.alert(js_loaded);
 }
 
 
@@ -209,7 +211,7 @@ function init() {
 	// add click handlers for menu toggle
 	set_menu_toggle();
 	// keep track of js files
-	add_js($document);
+	add_js($document, false);
 
 }
 
