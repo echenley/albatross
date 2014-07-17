@@ -146,7 +146,10 @@ function load_new_page(url, popstate) {
 			new_content = $('#dynamic', $new_page).html(),
 			new_title = $new_page.filter('title').text();
 
-		add_js($new_page, true);
+		// hack to make scripts available to parse
+		var albascripts = new_page.replace(/<script/gi, '<albascript');
+		// run any new js
+		add_js($(albascripts).filter('albascript'), true);
 
 		if (typeof history.pushState === "undefined") {
 			// Refresh the page to the new URL if pushState not supported
@@ -179,11 +182,10 @@ function load_new_page(url, popstate) {
 /* JavaScript Management
 ================================== */
 
-function add_js($doc, run) {
-	var src;
+function add_js($scripts, run) {
 	// add all <script> src attributes to js_loaded
-	$doc.find('script').each(function() {
-		src = $(this).attr('src');
+	$scripts.each(function() {
+		var src = $(this).attr('src');
 		if (src && $.inArray(src, js_loaded) === -1) {
 			js_loaded.push(src);
 			if (run) {
@@ -211,7 +213,7 @@ function init() {
 	// add click handlers for menu toggle
 	set_menu_toggle();
 	// keep track of js files
-	add_js($document, false);
+	add_js($('script'), false);
 
 }
 
