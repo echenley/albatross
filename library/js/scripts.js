@@ -187,7 +187,7 @@ function add_js($doc) {
 		src = $(this).attr('src');
 		if ($.inArray(src, js_loaded) === -1) {
 			js_loaded.push(src);
-			$('body').append($(this));
+			$.getScript(src);
 		}
 	});
 }
