@@ -191,6 +191,7 @@ function add_js($doc, run) {
 			}
 		}
 	});
+	window.console.log(js_loaded);
 }
 
 
