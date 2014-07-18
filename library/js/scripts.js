@@ -196,6 +196,7 @@ function add_js($scripts, run) {
 			}
 		}
 	});
+	window.console.log(external_js.length);
 	window.console.log(external_js);
 }
 
@@ -210,6 +211,7 @@ function add_css($styles, run) {
 			}
 		}
 	});
+	window.console.log(external_css.length);
 	window.console.log(external_css);
 }
 
