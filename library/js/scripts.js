@@ -200,8 +200,6 @@ function add_js($scripts, run) {
 					$.getScript(src);
 				}
 			}
-		} else {
-			eval($(this).text());
 		}
 	});
 	window.console.log('scripts.length = ' + $scripts.length);
