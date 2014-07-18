@@ -149,9 +149,10 @@ function load_new_page(url, popstate) {
 
 		// hack to make scripts available to parse
 		var albascripts = new_page.replace(/<script/gi, '<albascript');
-		// run any new js
-		add_js($(albascripts).filter('albascript'), true);
+		// run new css
 		add_css($new_page.filter('link[rel="stylesheet"]'), true);
+		// run new js
+		add_js($(albascripts).filter('albascript'), true);
 
 		if (typeof history.pushState === "undefined") {
 			// Refresh the page to the new URL if pushState not supported
