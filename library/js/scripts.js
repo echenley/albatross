@@ -155,7 +155,6 @@ function load_new_page(url, popstate) {
 		var albascripts = new_page.replace(/<script/gi, '<albascript').replace(/<\/script/gi, '</albascript');
 
 		// run new js
-		window.console.log($(albascripts).filter('albascript').length);
 		add_js($(albascripts).filter('albascript'), true);
 
 
@@ -194,14 +193,20 @@ function add_js($scripts, run) {
 	// add all <script> src attributes to external_js
 	$scripts.each(function() {
 		var src = $(this).attr('src');
-		if (src && $.inArray(src, external_js) === -1) {
-			external_js.push(src);
-			if (run) {
-				$.getScript(src);
+		if (src) {
+			if ($.inArray(src, external_js) === -1) {
+				external_js.push(src);
+				if (run) {
+					$.getScript(src);
+				}
 			}
+		} else {
+			eval($(this).text());
 		}
 	});
-	window.console.log(external_js.length);
+	window.console.log('scripts.length = ' + $scripts.length);
+	window.console.log('external_js.length = ' + external_js.length);
+	window.console.log('external_js = ');
 	window.console.log(external_js);
 }
 
@@ -216,8 +221,6 @@ function add_css($styles, run) {
 			}
 		}
 	});
-	window.console.log(external_css.length);
-	window.console.log(external_css);
 }
 
 /* Initialize
