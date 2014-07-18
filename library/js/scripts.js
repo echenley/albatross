@@ -142,19 +142,16 @@ function load_new_page(url, popstate) {
 		popstate = false;
 	}
 
-	$.get(url, function(new_page) {
+	$.get(url).done(function(new_page) {
 		var $new_page = $(new_page),
 			new_content = $('#dynamic', $new_page).html(),
 			new_title = $new_page.filter('title').text();
 
 		// run new css
 		add_css($new_page.filter('link[rel="stylesheet"]'), true);
-
-
 		// hack to make scripts available to parse
 		var albascripts = new_page.replace(/<script/gi, '<albascript').replace(/<\/script/gi, '</albascript');
-
-		// run new js
+		// run the new js
 		add_js($(albascripts).filter('albascript'), true);
 
 
@@ -178,9 +175,10 @@ function load_new_page(url, popstate) {
 			$dynamic.removeClass('cover');
 		}
 
-	}).done(function() {
+
 		$sidebar.addClass('transparent');
 		$dynamic.removeClass('slide');
+
 	});
 }
 
