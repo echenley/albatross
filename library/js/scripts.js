@@ -88,6 +88,43 @@ function update_history(link, new_title) {
 
 
 
+/* External Resource Management
+================================== */
+
+function add_js($scripts, run) {
+	// add all <script> src attributes to external_js
+	$scripts.each(function() {
+		var src = $(this).attr('src');
+		if (src) {
+			if ($.inArray(src, external_js) === -1) {
+				external_js.push(src);
+				if (run) {
+					$.getScript(src);
+				}
+			}
+		}
+	});
+	window.console.log('scripts.length = ' + $scripts.length);
+	window.console.log('external_js.length = ' + external_js.length);
+	window.console.log('external_js = ');
+	window.console.log(external_js);
+}
+
+function add_css($styles, run) {
+	// add all <style> src attributes to external_css
+	$styles.each(function() {
+		var href = $(this).attr('href');
+		if ($.inArray(href, external_css) === -1) {
+			external_css.push(href);
+			if (run) {
+				$('head').append('<link rel="stylesheet" type="text/css" href="' + href + '">');
+			}
+		}
+	});
+}
+
+
+
 /* Dynamic Content
 ================================== */
 
@@ -183,41 +220,6 @@ function load_new_page(url, popstate) {
 }
 
 
-
-/* External Resource Management
-================================== */
-
-function add_js($scripts, run) {
-	// add all <script> src attributes to external_js
-	$scripts.each(function() {
-		var src = $(this).attr('src');
-		if (src) {
-			if ($.inArray(src, external_js) === -1) {
-				external_js.push(src);
-				if (run) {
-					$.getScript(src);
-				}
-			}
-		}
-	});
-	window.console.log('scripts.length = ' + $scripts.length);
-	window.console.log('external_js.length = ' + external_js.length);
-	window.console.log('external_js = ');
-	window.console.log(external_js);
-}
-
-function add_css($styles, run) {
-	// add all <style> src attributes to external_css
-	$styles.each(function() {
-		var href = $(this).attr('href');
-		if ($.inArray(href, external_css) === -1) {
-			external_css.push(href);
-			if (run) {
-				$('head').append('<link rel="stylesheet" type="text/css" href="' + href + '">');
-			}
-		}
-	});
-}
 
 /* Initialize
 ================================== */
