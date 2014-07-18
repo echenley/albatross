@@ -150,6 +150,7 @@ function load_new_page(url, popstate) {
 		// hack to make scripts available to parse
 		var albascripts = new_page.replace(/<script/gi, '<albascript');
 		// run new css
+		window.console.log($new_page.filter('link[rel="stylesheet"]').length);
 		add_css($new_page.filter('link[rel="stylesheet"]'), true);
 		// run new js
 		add_js($(albascripts).filter('albascript'), true);
@@ -230,10 +231,10 @@ function init() {
 	activate_internal_links();
 	// add click handlers for menu toggle
 	set_menu_toggle();
-	// keep track of js files
-	add_js($('script'), false);
 	// keep track of css files
 	add_css($('link[rel="stylesheet"]'), false);
+	// keep track of js files
+	add_js($('script'), false);
 
 }
 
