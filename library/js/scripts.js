@@ -147,13 +147,17 @@ function load_new_page(url, popstate) {
 			new_content = $('#dynamic', $new_page).html(),
 			new_title = $new_page.filter('title').text();
 
-		// hack to make scripts available to parse
-		var albascripts = new_page.replace(/<script/gi, '<albascript');
 		// run new css
-		window.console.log($new_page.filter('link[rel="stylesheet"]').length);
 		add_css($new_page.filter('link[rel="stylesheet"]'), true);
+
+
+		// hack to make scripts available to parse
+		var albascripts = new_page.replace(/<script/gi, '<albascript').replace(/<\/script/gi, '</albascript');
+
 		// run new js
+		window.console.log($(albascripts).filter('albascript').length);
 		add_js($(albascripts).filter('albascript'), true);
+
 
 		if (typeof history.pushState === "undefined") {
 			// Refresh the page to the new URL if pushState not supported
