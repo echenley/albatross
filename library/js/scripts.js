@@ -50,7 +50,7 @@ function resize_videos() {
 	window.requestAnimationFrame(resize_videos);
 
 	var old_vid_width = $all_videos.first().width(),
-		new_vid_width = $('.glass-post-body .glass-wrapper').width();
+		new_vid_width = $('.post-body').width();
 
 	if (new_vid_width !== old_vid_width) {
 		$all_videos.each(function() {
