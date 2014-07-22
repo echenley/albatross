@@ -3,8 +3,11 @@
     <?php
         if (is_home() || is_single()) {
             // blog page
-            $name = "Blog";
-            $url =  site_url() . '/blog/';
+            $name = 'Blog';
+            $url = get_option('show_on_front') == 'page' ? get_permalink(get_option('page_for_posts')) : esc_url(home_url('/'));
+        } else if (is_archive()) {
+            $name = 'Archives';
+            $url = get_option('show_on_front') == 'page' ? get_permalink(get_option('page_for_posts')) : esc_url(home_url('/'));;
         } else if (is_page() && !is_front_page()) {
             // regular page
             $name = get_the_title();

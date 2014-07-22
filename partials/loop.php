@@ -6,6 +6,7 @@
 		$pagenum = (get_query_var('paged')) ? get_query_var('paged') : 1;
 		$header_text = '&mdash; ';
 
+		// set header text for search, category, and tag pages, with page number fallback
 		if (is_search()) {
 			$header_text .= sprintf(__('Search Results For: <strong>%s</strong>', 'albatross'), get_search_query('', false));
 		} else if (is_tag()) {
@@ -24,7 +25,7 @@
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 	<article class="post">
-		<h1 class="post-title"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permalink to: <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h1>
+		<h1 class="post-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title="Permalink to: <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h1>
 
 	    <?php get_template_part('partials/post-meta'); ?>
 

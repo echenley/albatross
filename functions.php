@@ -66,11 +66,20 @@ function albatross_title($title, $sep, $seplocation) {
 }
 
 
+// ADD CURRENT THEME TEMPLATE GLOBAL
+
+add_filter('template_include', 'albatross_template_include', 1000);
+function albatross_template_include($t){
+    $GLOBALS['current_theme_template'] = basename($t);
+    return $t;
+}
+
+
 // ENQUEUE JAVASCRIPT, FONTS AND CSS
 
 add_action('wp_enqueue_scripts', 'albatross_scripts', 11);
 function albatross_scripts() {
-    global $numpages;
+    global $numpages, $current_theme_template;
 
     // CSS //
     wp_enqueue_style('albatross-fonts', albatross_font_url(), array(), null);
@@ -79,13 +88,15 @@ function albatross_scripts() {
     // Javascript //
     wp_enqueue_script('albatross-scripts', get_template_directory_uri() . '/library/js/scripts-min.js', array('jquery'), '', true);
     wp_localize_script('albatross-scripts', 'albatross_vars', array(
-        'site_url' => get_site_url()
+        'site_url' => get_site_url(),
+        'current_theme_template' => $current_theme_template
     ));
 
     if (is_singular() && comments_open() && get_option('thread_comments')) {
         wp_enqueue_script('comment-reply');
 	}
 }
+
 
 // FONTS
  
@@ -101,6 +112,7 @@ function albatross_font_url() {
     return $font_url;
 }
 
+
 // CATEGORIES DISPLAY
 
 function albatross_categories() {
@@ -109,12 +121,13 @@ function albatross_categories() {
     $output = _n('Topic', 'Topics', count($categories), 'albatross') . ': ';
     if ($categories) {
         foreach ($categories as $category) {
-            $output .= '<a href="' . get_category_link( $category->term_id ) . '"';
-            $output .= ' title="' . esc_attr( sprintf( __('View all posts in %s', 'albatross'), $category->name ) ) . '">' . $category->cat_name . '</a>' . $separator;
+            $output .= '<a href="' . get_category_link( $category->term_id ) . '" ';
+            $output .= 'title="' . esc_attr( sprintf( __('View all posts in %s', 'albatross'), $category->name ) ) . '">' . $category->cat_name . '</a>' . $separator;
         }
         echo trim($output, $separator);
     }
 }
+
 
 // LOAD TEMPLATE PART AS STRING
 
@@ -124,6 +137,14 @@ function albatross_get_template_string($template_name, $part_name = null) {
     $content = ob_get_contents();
     ob_end_clean();
     return $content;
+}
+
+
+// REMOVE <P> ON <IMG>
+
+add_filter('the_content', 'filter_ptags_on_images');
+function filter_ptags_on_images($content){
+   return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
 }
 
 

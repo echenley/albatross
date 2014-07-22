@@ -522,16 +522,17 @@ hr {
 	    display: inline-block;
 	    position: relative;
 		top: -0.53em;
-		width: 30px;
+		width: 34px;
 		background: $primary-light;
 		content: "\a7";
 	}
 }
 
 hr.endpost {
-	font-size: 1.2em;
+	font-size: 1.4rem;
 	&:before {
-		content: "\2014\20\0E5B\20\2014";
+		top: -0.6em;
+		content: "\0E5B";
 	}
 }
 
