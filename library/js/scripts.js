@@ -4,16 +4,14 @@
 /* Global Variables
 ================================== */
 
-// albatross_vars defined via wp_localize_script
 var site_url = albatross_vars.site_url,
 	$document = $(document),
+	$body = $('body'),
 	$dynamic = $('#dynamic'),
 	$content = $('.content'),
 	$sidebar = $('.sidebar'),
-	$all_videos = $('iframe[src*="//www.youtube.com"], iframe[src*="//player.vimeo.com"]'),
-	$internal_links = $('a[href^="' + site_url + '"], a[href^="/"], a[href^="./"], a[href^="../"]'),
-	external_js = [],
-	external_css = [];
+	$title = $('title'),
+	$all_videos = $('iframe[src*="//www.youtube.com"], iframe[src*="//player.vimeo.com"]');
 
 
 /* Page Setup
@@ -23,7 +21,7 @@ function position_vertically() {
 	var $el = $('.sidebar'),
 		el_height = $el.outerHeight(),
 		container_height = $(window).height();
-	$el.add('.cover-nav').css('margin-top', (container_height - el_height) / 2);
+	$el.css('margin-top', (container_height - el_height) / 2);
 }
 
 
@@ -66,7 +64,7 @@ function resize_videos() {
 ================================== */
 
 function set_history() {
-
+	// set history state if there isn't one
 	if (typeof history.replaceState !== 'undefined') {
 		history.replaceState({
 			slug: location.pathname.replace('/', '')
@@ -75,52 +73,16 @@ function set_history() {
 
 	// event handler for back/forward
 	window.onpopstate = function() {
-		// load_new_page WITH popstate (only triggered with browser back/forward buttons)
-		load_new_page(location.href, true);
+		// load the new page
+		load_new_page(window.location.href, true);
 	};
 }
 
 function update_history(link, new_title) {
 	history.pushState({
+		ajaxload: true,
 		slug: link
 	}, new_title, link);
-}
-
-
-
-/* External Resource Management
-================================== */
-
-function add_js($scripts, run) {
-	// add all <script> src attributes to external_js
-	$scripts.each(function() {
-		var src = $(this).attr('src');
-		if (src) {
-			if ($.inArray(src, external_js) === -1) {
-				external_js.push(src);
-				if (run) {
-					$.getScript(src);
-				}
-			}
-		}
-	});
-	window.console.log('scripts.length = ' + $scripts.length);
-	window.console.log('external_js.length = ' + external_js.length);
-	window.console.log('external_js = ');
-	window.console.log(external_js);
-}
-
-function add_css($styles, run) {
-	// add all <style> src attributes to external_css
-	$styles.each(function() {
-		var href = $(this).attr('href');
-		if ($.inArray(href, external_css) === -1) {
-			external_css.push(href);
-			if (run) {
-				$('head').append('<link rel="stylesheet" type="text/css" href="' + href + '">');
-			}
-		}
-	});
 }
 
 
@@ -156,65 +118,82 @@ function set_menu_toggle() {
 }
 
 function activate_internal_links() {
-	$document.on('click', 'a[href^="' + site_url + '"], a[href^="/"], a[href^="./"], a[href^="../"]', function(e) {
+
+	// menu toggle behavior
+	if (!$body.hasClass('page-template-page-cover-php')) {
+		set_menu_toggle();
+	}
+
+	var internal_links = 'a[href^="' + site_url + '"]:not(.page-numbers), a[href^="/"]:not(.page-numbers), a[href^="./"]:not(.page-numbers), a[href^="../"]:not(.page-numbers)';
+
+	// main menu behavior
+	$document.on('click', internal_links, function(e) {
+		e.preventDefault();
+		$('.current-menu-item').removeClass('current-menu-item');
+		$(this).parent().addClass('current-menu-item');
+		$dynamic.addClass('fade');
+
+		// unslide after a brief pause
+		setTimeout(function() {
+			if ($dynamic.hasClass('slide')) {
+				$dynamic.removeClass('slide');
+				// wait for slide, then load the new page
+				setTimeout(function() { 
+					window.location.href = e.target.href;
+				}, 300);
+			} else {
+				// just load that shit
+				window.location.href = e.target.href;
+			}
+			
+		}, 200);
+
+	});
+
+	// pagination behavior
+	$document.on('click', '.page-numbers', function(e) {
+		e.preventDefault();
 		var $this = $(this),
 			href = $this.attr('href');
 		load_new_page(href);
-		$('a[href="' + href + '"').addClass('current_link').parent().addClass('current_page_item');
-		e.preventDefault();
-	});
-
-	$document.on('click', '.page-numbers', function() {
 		page_scroll(0, 500);
 	});
 }
 
 function load_new_page(url, popstate) {
 
-	$internal_links.removeClass('current_link');
-	$('.current_page_item').removeClass('current_page_item');
-
 	// default popstate is false
-	if (typeof(popstate) === 'undefined') {
+	if (typeof popstate === 'undefined') {
 		popstate = false;
 	}
 
-	$.get(url).done(function(new_page) {
-		var $new_page = $(new_page),
-			new_content = $('#dynamic', $new_page).html(),
-			new_title = $new_page.filter('title').text();
+	// fade out the div
+	if (!popstate) {
+		$dynamic.addClass('fade');
+	}
 
-		// run new css
-		add_css($new_page.filter('link[rel="stylesheet"]'), true);
-		// hack to make scripts available to parse
-		var albascripts = new_page.replace(/<script/gi, '<albascript').replace(/<\/script/gi, '</albascript');
-		// run the new js
-		add_js($(albascripts).filter('albascript'), true);
+	// get it gurl
+	$.getJSON(url, 'ajax', function(json_data) {
 
+		// set new title
+		$title.text(json_data.title);
+		// load the content
+		$dynamic.html(json_data.content);
 
-		if (typeof history.pushState === "undefined") {
+		if (typeof history.pushState === 'undefined') {
 			// Refresh the page to the new URL if pushState not supported
 			location.href = url;
 		}
 
 		// update the history
 		if (!popstate) {
-			update_history(url, new_title);
-		}
-		// load the content
-		$dynamic.html(new_content);
-
-		// if going to homepage
-		if (url.slice(0,-1) === site_url) {
-			position_vertically();
-			$dynamic.addClass('cover');
-		} else {
-			$dynamic.removeClass('cover');
+			update_history(url, json_data.title);
 		}
 
-
+		// load the content, reset layout
+		$dynamic.html(json_data.content);
 		$sidebar.addClass('transparent');
-		$dynamic.removeClass('slide');
+		$dynamic.removeClass('slide fade');
 
 	});
 }
@@ -232,14 +211,8 @@ function init() {
 	position_vertically();
 	// setup responsive videos
 	responsive_video_setup();
-	// set internal link transitions
+	// set special link behavior
 	activate_internal_links();
-	// add click handlers for menu toggle
-	set_menu_toggle();
-	// keep track of css files
-	add_css($('link[rel="stylesheet"]'), false);
-	// keep track of js files
-	add_js($('script'), false);
 
 }
 

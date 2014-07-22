@@ -1,9 +1,24 @@
-
+ 
 <section class="post-list">
 
-<div class="archive-header">
-	<?php $paged = (get_query_var('paged')) ? get_query_var('paged') : 1; ?>
-	&mdash; <?php echo $paged; ?> &mdash;
+<div class="archive-header">	
+	<?php
+		$pagenum = (get_query_var('paged')) ? get_query_var('paged') : 1;
+		$header_text = '&mdash; ';
+
+		if (is_search()) {
+			$header_text .= sprintf(__('Search Results For: <strong>%s</strong>', 'albatross'), get_search_query('', false));
+		} else if (is_tag()) {
+			$header_text .= sprintf(__('Tag Archives: <strong>%s</strong>', 'albatross'), single_tag_title('', false));
+		} else if (is_category()) {
+			$header_text .= sprintf(__('Category Archives: <strong>%s</strong>', 'albatross'), single_cat_title('', false));
+		} else {
+			$header_text .= $pagenum;
+		}
+
+		$header_text .= ' &mdash;';
+		echo $header_text;
+	?>
 </div>
 
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
@@ -27,7 +42,7 @@
 
     <hr>
 
-<?php endwhile; else: ?>
+<?php endwhile; else : ?>
 
 	<p><?php _e('Sorry, no posts matched your criteria.'); ?></p>
 
