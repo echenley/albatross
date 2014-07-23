@@ -169,7 +169,7 @@ function activate_internal_links() {
 		var $this = $(this),
 			href = $this.attr('href');
 		load_new_page(href);
-		page_scroll(0, 500);
+		page_scroll(0, 600);
 	});
 }
 
@@ -203,10 +203,13 @@ function load_new_page(url, popstate) {
 			update_history(url, json_data.title);
 		}
 
-		// load the content, reset layout
-		$dynamic.html(json_data.content);
-		$sidebar.addClass('transparent');
-		$dynamic.removeClass('slide fade');
+		// setTimeout ensures the fade effect will occur before content is reloaded
+		setTimeout(function() { 
+			// load the content, reset layout
+			$dynamic.html(json_data.content);
+			$sidebar.addClass('transparent');
+			$dynamic.removeClass('slide fade');
+		}, 300);
 
 	});
 }
