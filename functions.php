@@ -140,12 +140,21 @@ function albatross_get_template_string($template_name, $part_name = null) {
 }
 
 
+/* =============================
+    Small Cusomizations
+============================= */
+
 // REMOVE <P> ON <IMG>
 
 add_filter('the_content', 'filter_ptags_on_images');
 function filter_ptags_on_images($content){
    return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
 }
+
+
+// Remove Caption Padding
+function albatross_caption_padding($width) { return $width - 10; }
+add_filter('img_caption_shortcode_width', 'albatross_caption_padding');
 
 
 

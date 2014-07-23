@@ -388,6 +388,7 @@ body {
 
 h1,h2,h3,h4,h5,h6,
 .content-header-title {
+	color: $primary-color;
 	font-family: $serif;
 	font-weight: 300;
 	clear: both;
@@ -403,6 +404,48 @@ h2,h3,h4,h5,h6 {
 h1:not(.site-title),h2 {
 	color: $primary-color;
 	border-bottom: 1px solid $primary-color;
+}
+
+h2 {
+	font-size: 2.4em;
+}
+
+h3 {
+	font-size: 2em;
+}
+
+h4 {
+	font-size: 1.7em;
+}
+
+h5 {
+	font-size: 1.55em;
+}
+
+h6 {
+	font-size: 1.4em;
+}
+
+.post-body {
+	h2 {
+		padding-bottom: 0.2em;
+		border-bottom: 1px solid $primary-color;
+		color: $primary-color;
+	}
+
+	h2,h3 {
+		margin: $margin-large 0;
+	}
+
+	h4,h5,h6 {
+		@extend %standard-margin;
+	}
+
+	h3,h4,h5,h6 {
+		&:before {
+			content: "\2192\20";
+		}
+	}
 }
 
 
@@ -548,12 +591,15 @@ iframe {
     width: 100%;
 }
 
+.post img {
+	@extend %border-radius;
+}
+
 .post img:not(.icon):not(.alignright):not(.alignleft) {
     display: block;
 	height: auto;
 	max-width: 100%;
     margin: $margin-medium auto;
-	@extend %border-radius;
 }
 
 p {
@@ -678,19 +724,40 @@ sub { top: 0.4em; }
     margin: $margin-medium auto;
 }
 
-img.alignleft, .caption.alignleft,
-img.alignright, .caption.alignright {
+img.alignleft, .wp-caption.alignleft,
+img.alignright, .wp-caption.alignright {
     max-width: 50% !important;
 }
 
-img.alignright, .caption.alignright {
+img.alignright, .wp-caption.alignright {
     margin: 0.9rem 0 0.9rem $margin-medium;
 }
 
-img.alignleft, .caption.alignleft {
+img.alignleft, .wp-caption.alignleft {
     margin: 0.9rem $margin-medium 0.9rem 0;
 }
 
+.wp-caption {
+    line-height: 0;
+    @extend %max-width;
+    img {
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 none !important;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+    }
+}
+
+.wp-caption-text {
+    background: $highlight;
+    @extend %text-align-center;
+    padding: 0.8em;
+    margin: 0 !important;
+    font-style: italic;
+    line-height: 1.4;
+	@extend %border-radius;
+}
 
 @media screen and (max-width: nth($breakpoints, 1)) {
 	img.alignleft, .caption.alignleft,
@@ -700,13 +767,5 @@ img.alignleft, .caption.alignleft {
 		margin: $margin-medium auto !important;
 	}
 }
-
-
-
-/* Syntax Highlighting (prism.js)
-====================================== */
-@import '_prism';
-
-
 
 
