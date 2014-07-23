@@ -51,7 +51,7 @@ $monospace: Consolas, Monaco, 'Andale Mono', monospace;
 }
 
 *, *:before, *:after {
-	box-sizing: border-box;
+	box-sizing: inherit;
 }
 
 .cf {
@@ -132,6 +132,10 @@ body,
 .container,
 .content {
 	min-height: 100vh;
+}
+
+html {
+	box-sizing: border-box;
 }
 
 body {
@@ -240,7 +244,7 @@ body {
 .content-header {
 	margin-bottom: $margin-medium;
 	line-height: 50px;
-	padding: 0 $margin-small;
+	padding-left: $margin-small;
 	background: $primary-color;
 	color: $primary-light;
 	font-family: $serif;
@@ -250,12 +254,18 @@ body {
 }
 
 .menu-toggle {
+	display: inline-block;
 	float: right;
+	padding: 0 $margin-small;
 	line-height: 50px;
 	font-size: 1.6em;
 	color: $primary-light;
-	&:hover {
+	@extend %transition-300ms;
+	&:hover,
+	.slide & {
 		text-decoration: none;
+		background: $primary-light;
+		color: $primary-color;
 	}
 }
 
