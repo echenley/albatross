@@ -19,5 +19,5 @@
             echo ' &rarr; <a href="' . $url . '">' . $name . '</a>';
         }
     ?>
-    <a href="#" class="menu-toggle">&#9776;</a>
+    <a href="<?php echo esc_url(home_url('/')); ?>" class="menu-toggle">&#9776;</a>
 </div>
