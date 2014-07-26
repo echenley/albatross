@@ -1,4 +1,4 @@
-(function($) {
+(function($, albatross_vars) {
 
 
 /* Global Variables
@@ -237,4 +237,4 @@ function init() {
 
 init();
 
-})(jQuery);
+})(jQuery, albatross_vars);
