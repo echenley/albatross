@@ -19,7 +19,7 @@ if (!function_exists('albatross_setup')) {
         add_theme_support('custom-header', array(
             'flex-width' => true,
             'flex-height' => true,
-            'default-image' => get_template_directory_uri() . '/images/header.jpg'
+            'default-image' => get_template_directory_uri() . '/library/images/header.jpg'
         ));
         
         // Sidebar Menu //
