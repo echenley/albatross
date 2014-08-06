@@ -2,7 +2,10 @@
 
 $albatross_json = array(
 	'title' => wp_title('|', false, 'right'),
-	'content' => albatross_get_template_string('partials/content-header') . albatross_get_template_string('partials/loop')
+	'content' => albatross_get_template_string('partials/content-top') . 
+				 albatross_get_template_string('partials/content-header') .
+				 albatross_get_template_string('partials/loop') .
+				 albatross_get_template_string('partials/content-bottom')
 );
 
 // return json if called with ajax

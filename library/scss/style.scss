@@ -27,7 +27,7 @@ $sidebar-width:        320px;
 $sidebar-width-mobile: 70%;
 
 // media query breakpoints
-$breakpoints: (767px,1280px);
+$breakpoints: (481px, 767px,1280px);
 
 
 /* Typography
@@ -142,7 +142,7 @@ body {
 	font-family: $sans-serif;
 	font-size: $font-size;
 	font-weight: 300;
-	@media screen and (min-width: nth($breakpoints, 1)) {
+	@media screen and (min-width: nth($breakpoints, 2)) {
 		font-size: $font-size * 1.1;
 	}
 }
@@ -163,7 +163,7 @@ body {
 	&.slide  {
 		transform: translate(-$sidebar-width-mobile, 0);
 	}
-	@media screen and (min-width: nth($breakpoints, 1)) {
+	@media screen and (min-width: nth($breakpoints, 2)) {
 		&.slide  {
 			transform: translate(-$sidebar-width, 0);
 		}
@@ -212,6 +212,7 @@ body {
 .sidebar {
 	position: fixed;
 	width: $sidebar-width-mobile;
+	margin-top: 10%;
 	margin-left: 100% - $sidebar-width-mobile;
 	padding: $margin-medium 0;
 	background: $primary-light;
@@ -230,7 +231,7 @@ body {
 	font-size: 1.8em;
 	line-height: 1.1;
 	color: $primary-color;
-	@media screen and (min-width: nth($breakpoints, 1)) {
+	@media screen and (min-width: nth($breakpoints, 2)) {
 		font-size: 2.1em;
 	}
 }
@@ -293,21 +294,65 @@ body {
 	}
 }
 
+
+
+/* Events
+====================================== */
+
+.tribe-events-page-title {
+	border-bottom: none !important;
+}
+
+
+
 /* Cover Page
 ====================================== */
 
 .page-template-page-cover-php {
 	.sidebar {
 		position: relative;
-		width: $sidebar-width;
-		margin-top: 15%;
-		@media screen and (min-width: nth($breakpoints, 1)) {
-			margin-left: auto;
-			margin-right: auto;
-		}
+		margin-left: auto;
+		margin-right: auto;
 	}
 	.content { display: none; }
 }
+
+.upcoming {
+	background: $primary-light;
+	width: $sidebar-width-mobile;
+	margin: $margin-small auto;
+	@media screen and (min-width: nth($breakpoints, 1)) {
+		width: $sidebar-width;
+	}
+}
+
+
+.event-widget {
+	padding: $margin-small;
+	> * {
+		margin: 0;
+		padding: 0;
+		font-size: initial;
+		text-align: center;
+	}
+	h4 {
+		font-size: 1.5rem;
+		margin-bottom: $margin-small;
+	}
+	p {
+		line-height: 1.2;
+	}
+	.hentry {
+		margin-bottom: 0;
+	}
+	.duration {
+		font-weight: 300;
+	}
+	.tribe-events-widget-link {
+		display: none;
+	}
+}
+
 
 .cover-image {
 	position: fixed;
@@ -331,7 +376,7 @@ body {
 .pagination {
 	position: relative;
 	@extend %text-align-center;
-	@media screen and (min-width: nth($breakpoints, 1)) {
+	@media screen and (min-width: nth($breakpoints, 2)) {
 	    padding-left: 90px;
 	    padding-right: 80px;
 	}
@@ -340,7 +385,7 @@ body {
     }
     .next,
     .prev {
-		@media screen and (min-width: nth($breakpoints, 1)) {
+		@media screen and (min-width: nth($breakpoints, 2)) {
 			position: absolute;
 		}
     }
@@ -350,7 +395,7 @@ body {
     }
     .prev {
 		float: left;
-		@media screen and (min-width: nth($breakpoints, 1)) {
+		@media screen and (min-width: nth($breakpoints, 2)) {
 	        left: 0;
 		}
         &:before {
@@ -360,7 +405,7 @@ body {
     }
     .next {
 		float: right;
-		@media screen and (min-width: nth($breakpoints, 1)) {
+		@media screen and (min-width: nth($breakpoints, 2)) {
 	        right: 0;
 		}
         &:after {
@@ -372,7 +417,7 @@ body {
     > *:not(.next):not(.prev) {
         display: none;
     }
-	@media screen and (min-width: nth($breakpoints, 1)) {
+	@media screen and (min-width: nth($breakpoints, 2)) {
 	    > *:not(.next):not(.prev) {
 	        display: inline-block;
 	    }
@@ -398,7 +443,7 @@ body {
 			color: darken($primary-color, 15%);
 		}
 	}
-	@media screen and (min-width: nth($breakpoints, 1)) {
+	@media screen and (min-width: nth($breakpoints, 2)) {
 		font-size: 3em;
 	}
 }
@@ -792,7 +837,7 @@ img.alignleft, .wp-caption.alignleft {
 	@extend %border-radius;
 }
 
-@media screen and (max-width: nth($breakpoints, 1)) {
+@media screen and (max-width: nth($breakpoints, 2)) {
 	img.alignleft, .caption.alignleft,
 	img.alignright, .caption.alignright {
 		float: none;

@@ -11,6 +11,3 @@
         <div class="container cf">
 
             <?php get_template_part('partials/sidebar'); ?>
-
-            <section id="dynamic" class="content cf<?php if (is_page_template('page-cover.php')) echo ' cover'; ?>">
-                <img class="loading" src="<?php echo get_template_directory_uri(); ?>/library/images/loading.gif">

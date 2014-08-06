@@ -1,4 +1,5 @@
 <?php get_header(); ?>
+<?php get_template_part('partials/content-top'); ?>
 <?php get_template_part('partials/content-header'); ?>
 
 <div class="post">
@@ -11,4 +12,5 @@
 	</div>
 </div>
 
+<?php get_template_part('partials/content-bottom'); ?>
 <?php get_footer(); ?>

@@ -238,7 +238,7 @@ function init() {
 	// set onpopstate AND initial app state if there isn't one set (e.g. after reload)
 	set_history();
 	// position sidebar/cover-nav vertically
-	position_vertically();
+	// position_vertically();
 	// setup responsive videos
 	responsive_video_setup();
 	// set special link behavior

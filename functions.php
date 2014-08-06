@@ -98,6 +98,18 @@ function albatross_scripts() {
 }
 
 
+// WIDGETS
+register_sidebar(array(
+    'name' => __('Event Widget', 'albatross'),
+    'id'     => 'event-widget',
+    'description'     => __('Use this to show an upcoming event on the homepage.', 'albatross'),
+    'before_widget' => '<div class="' . 'event-widget' . ' widget %2$s">',
+    'after_widget'    => '</div>',
+    'before_title'    => '<h4>',
+    'after_title'     => '</h4>'
+));
+
+
 // FONTS
  
 function albatross_font_url() {
