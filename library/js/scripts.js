@@ -194,7 +194,7 @@ function load_new_page(url, popstate) {
 		// set new title
 		$title.text(json_data.title);
 		// load the content
-		$dynamic.html(json_data.content.innerHTML);
+		$dynamic.html(json_data.content);
 
 		if (typeof history.pushState === 'undefined') {
 			// Refresh the page to the new URL if pushState not supported
