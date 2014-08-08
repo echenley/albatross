@@ -9,5 +9,3 @@
     </head>
     <body <?php body_class(); ?>>
         <div class="container cf">
-
-            <?php get_template_part('partials/sidebar'); ?>

@@ -20,6 +20,7 @@ if (isset($_GET['ajax'])) {
 } else {
 	
 	get_header();
+	get_template_part('partials/sidebar');
 	get_template_part('partials/content-top');
 	echo $albatross_json['content'];
 	get_template_part('partials/content-bottom');

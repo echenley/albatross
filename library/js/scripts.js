@@ -30,6 +30,13 @@ function add_end_mark() {
 	}
 }
 
+function position_cover() {
+	var $cover_container = $('.cover-container'),
+		cover_height = $cover_container.outerHeight(),
+		window_height = $(window).height();
+	$cover_container.css('margin-top', (window_height - cover_height) / 2);
+}
+
 
 
 /* Responsivity
@@ -232,6 +239,10 @@ function init() {
 	set_history();
 	// setup responsive videos
 	responsive_video_setup();
+	// position cover vertically
+	if (current_theme_template === 'page-cover.php') {
+		position_cover();
+	}
 	// set special link behavior
 	activate_internal_links();
 
