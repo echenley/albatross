@@ -18,13 +18,6 @@ var site_url = albatross_vars.site_url,
 /* Page Setup
 ================================== */
 
-function position_vertically() {
-	var $el = $('.sidebar'),
-		el_height = $el.outerHeight(),
-		container_height = $(window).height();
-	$el.css('margin-top', (container_height - el_height) / 2);
-}
-
 // adds end mark to end of posts
 function add_end_mark() {
 	var $wrapper = $('.post-body'),
@@ -201,7 +194,7 @@ function load_new_page(url, popstate) {
 		// set new title
 		$title.text(json_data.title);
 		// load the content
-		$dynamic.html(json_data.content);
+		$dynamic.html(json_data.content.innerHTML);
 
 		if (typeof history.pushState === 'undefined') {
 			// Refresh the page to the new URL if pushState not supported
@@ -237,8 +230,6 @@ function init() {
 	});
 	// set onpopstate AND initial app state if there isn't one set (e.g. after reload)
 	set_history();
-	// position sidebar/cover-nav vertically
-	// position_vertically();
 	// setup responsive videos
 	responsive_video_setup();
 	// set special link behavior
