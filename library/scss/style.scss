@@ -175,18 +175,18 @@ body {
 		padding: 0 5%;
 	}
 
-	// for fadein effect
-
 	> * {
-		@include transition(opacity 0.5s);
+		opacity: 1;
+		@include transition(opacity 0.3s);
 	}
+
+	// for fadein effect
 	.fadein & > * {
 		opacity: 0;
 	}
 }
 
 .fade > * {
-	@include transition(opacity .5s);
 	opacity: 0;
 }
 
@@ -198,7 +198,7 @@ body {
 	opacity: 0;
 	width: 30px;
 	height: 30px;
-	@include transition(opacity .5s);
+	@include transition(opacity 0.5s);
 	.fade &,
 	.fadein & {
 		opacity: 1 !important;
@@ -351,6 +351,7 @@ body {
 	}
 	.duration {
 		font-weight: 300;
+		font-size: 0.8rem;
 	}
 	.tribe-events-widget-link {
 		display: none;

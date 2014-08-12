@@ -9,7 +9,6 @@ var site_url = albatross_vars.site_url,
 	$document = $(document),
 	$body = $('body'),
 	$dynamic = $('#dynamic'),
-	$content = $('.content'),
 	$sidebar = $('.sidebar'),
 	$title = $('title'),
 	$all_videos = $('iframe[src*="//www.youtube.com"], iframe[src*="//player.vimeo.com"]');
@@ -103,14 +102,10 @@ function update_history(link, new_title) {
 /* Dynamic Content
 ================================== */
 
-function page_scroll(scrollto, speed) {
-	$('html,body').stop().animate({ scrollTop: scrollto }, speed);
-}
-
 function toggle_sidebar(e) {
     var container = $('.sidebar, .menu-toggle');
     if (!container.is(e.target) && container.has(e.target).length === 0) {
-        $content.removeClass('slide');
+        $dynamic.removeClass('slide');
         $sidebar.addClass('transparent');
     }
 }
@@ -119,7 +114,7 @@ function set_menu_toggle() {
 	$document.on('click', '.menu-toggle', function(e) {
 		e.preventDefault();
 		$sidebar.toggleClass('transparent');
-		$content.toggleClass('slide');
+		$dynamic.toggleClass('slide');
 	});
 
 	// hide mobile menu on unfocus
@@ -176,19 +171,21 @@ function activate_internal_links() {
 
 	// pagination behavior
 	$document.on('click', '.page-numbers', function(e) {
-		e.preventDefault();
+		// allow command-click and control-click to open new tab
+		if (e.metaKey || e.ctrlKey) {  
+		    return;
+		} else {
+		    e.preventDefault();
+		}
 		var href = e.target.href;
-		load_new_page(href);
-		page_scroll(0, 600);
+		load_new_page(href, false, true);
 	});
 }
 
-function load_new_page(url, popstate) {
+function load_new_page(url, popstate, toTop) {
 
-	// default popstate is false
-	if (typeof popstate === 'undefined') {
-		popstate = false;
-	}
+	// scroll to top?
+	toTop = toTop || false;
 
 	// fade out the div
 	if (!popstate) {
@@ -198,15 +195,13 @@ function load_new_page(url, popstate) {
 	// get it gurl
 	$.getJSON(url, 'ajax', function(json_data) {
 
-		// set new title
-		$title.text(json_data.title);
-		// load the content
-		$dynamic.html(json_data.content);
-
 		if (typeof history.pushState === 'undefined') {
 			// Refresh the page to the new URL if pushState not supported
 			location.href = url;
 		}
+
+		// set new title
+		$title.text(json_data.title);
 
 		// update the history
 		if (!popstate) {
@@ -218,8 +213,12 @@ function load_new_page(url, popstate) {
 		setTimeout(function() { 
 			$dynamic.html(json_data.content);
 			$sidebar.addClass('transparent');
-			$dynamic.removeClass('slide fade');
-		}, 500);
+			if (top) { $(window).scrollTop(0); }
+			// give the content a split second
+			setTimeout(function() {
+				$dynamic.removeClass('slide fade');
+			}, 100);
+		}, 300);
 
 	});
 }
