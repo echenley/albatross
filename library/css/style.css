@@ -170,18 +170,19 @@ body {
           transform: translate3d(0, 0, 0);
   background: #fff; }
   .content.slide {
-    -webkit-transform: translate3d(-70%, 0, 0);
-            transform: translate3d(-70%, 0, 0); }
+    -webkit-transform: translate3d(-260px, 0, 0);
+            transform: translate3d(-260px, 0, 0); }
   @media screen and (min-width: 767px) {
     .content.slide {
       -webkit-transform: translate3d(-320px, 0, 0);
               transform: translate3d(-320px, 0, 0); } }
   .content > * {
+    -webkit-transition: opacity 0.3s;
+            transition: opacity 0.3s;
     -webkit-animation: fade-in 0.3s;
             animation: fade-in 0.3s; }
-
-.fade > * {
-  opacity: 0; }
+  .content.fade > * {
+    opacity: 0; }
 
 .loading {
   position: absolute;
@@ -199,18 +200,21 @@ body {
 /* Sidebar
 ====================================== */
 .sidebar {
-  position: fixed;
-  width: 70%;
-  margin-top: 10%;
-  margin-left: 30%;
+  position: absolute;
+  width: 260px;
+  margin-top: 80px;
   padding: 1.6rem 0;
   background: #fff;
   -webkit-transition: opacity 0.3s;
           transition: opacity 0.3s; }
-  @media screen and (min-width: 481px) {
+  @media screen and (max-width: 767px) {
     .sidebar {
-      max-width: 320px;
-      margin-left: 447px; } }
+      right: 0; } }
+  @media screen and (min-width: 768px) {
+    .sidebar {
+      position: fixed;
+      margin-left: 447px;
+      width: 320px; } }
 
 .site-title {
   display: block;
@@ -257,12 +261,13 @@ body {
     color: #fff; }
 
 .menu-toggle {
-  display: inline-block;
+  display: block;
   float: right;
-  padding: 0 1rem;
-  line-height: 50px;
   font-size: 1.6em;
-  color: #fff; }
+  color: #fff;
+  line-height: 50px;
+  width: 50px;
+  text-align: center; }
   .menu-toggle:hover, .slide .menu-toggle {
     text-decoration: none;
     background: #fff;
@@ -294,31 +299,11 @@ body {
 
 .upcoming {
   background: #fff;
-  width: 70%;
+  width: 260px;
   margin: 1rem auto; }
   @media screen and (min-width: 481px) {
     .upcoming {
       width: 320px; } }
-
-.event-widget {
-  padding: 1rem; }
-  .event-widget > * {
-    margin: 0;
-    padding: 0;
-    font-size: initial;
-    text-align: center; }
-  .event-widget h4 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem; }
-  .event-widget p {
-    line-height: 1.2; }
-  .event-widget .hentry {
-    margin-bottom: 0; }
-  .event-widget .duration {
-    font-weight: 300;
-    font-size: 0.8rem; }
-  .event-widget .tribe-events-widget-link {
-    display: none; }
 
 /* Blog Index
 ====================================== */

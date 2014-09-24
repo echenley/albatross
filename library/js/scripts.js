@@ -10,7 +10,6 @@ var site_url = albatross_vars.site_url,
 	$body = $('body'),
 	$dynamic = $('#dynamic'),
 	$sidebar = $('.sidebar'),
-	$title = $('title'),
 	$all_videos = $('iframe[src*="//www.youtube.com"], iframe[src*="//player.vimeo.com"]');
 
 
@@ -64,33 +63,6 @@ function resize_videos() {
 
 
 
-/* History Management
-================================== */
-
-function set_history() {
-	// set history state if there isn't one
-	if (typeof history.replaceState !== 'undefined') {
-		history.replaceState({
-			slug: location.pathname.replace('/', '')
-		}, null, null);
-	}
-
-	// event handler for back/forward
-	window.onpopstate = function() {
-		// load the new page
-		load_new_page(window.location.href, true);
-	};
-}
-
-function update_history(link, new_title) {
-	history.pushState({
-		ajaxload: true,
-		slug: link
-	}, new_title, link);
-}
-
-
-
 /* Dynamic Content
 ================================== */
 
@@ -124,10 +96,11 @@ function activate_internal_links() {
 		set_menu_toggle();
 	}
 
-	var internal_links = 'a[href^="' + site_url + '"]:not(.page-numbers):not(.menu-toggle), ' +
-		'a[href^="/"]:not(.page-numbers):not(.menu-toggle), ' +
-		'a[href^="./"]:not(.page-numbers):not(.menu-toggle), ' +
-		'a[href^="../"]:not(.page-numbers):not(.menu-toggle)';
+	var internal_links = 'a[href^="' + site_url + '"]:not(.menu-toggle), ' +
+		'a[href^="http://stinky.local"]:not(.menu-toggle), ' +
+		'a[href^="/"]:not(.menu-toggle), ' +
+		'a[href^="./"]:not(.menu-toggle), ' +
+		'a[href^="../"]:not(.menu-toggle)';
 
 	// main menu behavior
 	$document.on('click', internal_links, function(e) {
@@ -150,66 +123,14 @@ function activate_internal_links() {
 				$dynamic.removeClass('slide');
 				// wait for slide, then load the new page
 				setTimeout(function() { 
-					window.location.href = e.target.href;
+					window.location.href = e.currentTarget.href;
 				}, 300);
 			} else {
 				// just load that shit
-				window.location.href = e.target.href;
+				window.location.href = e.currentTarget.href;
 			}
 			
 		}, 200);
-
-	});
-
-	// pagination behavior
-	$document.on('click', '.page-numbers', function(e) {
-		// allow command-click and control-click to open new tab
-		if (e.metaKey || e.ctrlKey) {  
-		    return;
-		}
-		e.preventDefault();
-		var href = e.target.href;
-		load_new_page(href, false, true);
-	});
-}
-
-function load_new_page(url, popstate, toTop) {
-
-	// scroll to top?
-	toTop = toTop || false;
-
-	// fade out the div
-	if (!popstate) {
-		$dynamic.addClass('fade');
-	}
-
-	// get it gurl
-	$.getJSON(url, 'ajax', function(json_data) {
-
-		if (typeof history.pushState === 'undefined') {
-			// Refresh the page to the new URL if pushState not supported
-			location.href = url;
-		}
-
-		// set new title
-		$title.text(json_data.title);
-
-		// update the history
-		if (!popstate) {
-			update_history(url, json_data.title);
-		}
-
-		// load the content, reset layout
-		// setTimeout ensures the fade effect will occur before content is reloaded
-		setTimeout(function() { 
-			$dynamic.html(json_data.content);
-			$sidebar.addClass('transparent');
-			if (top) { $(window).scrollTop(0); }
-			// give the content a split second
-			setTimeout(function() {
-				$dynamic.removeClass('slide fade');
-			}, 100);
-		}, 300);
 
 	});
 }
@@ -221,8 +142,6 @@ function load_new_page(url, popstate, toTop) {
 
 function init() {
 
-	// set onpopstate AND initial app state if there isn't one set (e.g. after reload)
-	set_history();
 	// setup responsive videos
 	responsive_video_setup();
 	// set special link behavior
