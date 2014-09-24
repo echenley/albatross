@@ -66,20 +66,26 @@ $monospace: Consolas, Monaco, 'Andale Mono', monospace;
 }
 
 
-/* Mixins
+
+/* Animations
 ====================================== */
 
-@mixin prefix($property, $value, $prefixes: ('-webkit-', '-moz-', '-ie-', '-o-')) {
-    @each $prefix in $prefixes {
-        #{$prefix}#{$property}: $value;
-    }
-    #{$property}: $value;
+@keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
 }
 
-@mixin transition($value) {
-    $prefixes: ('-webkit-', '-moz-', '-o-');
-    @include prefix('transition', $value, $prefixes);
+@keyframes slide-in {
+    0% {
+        transform: translate3d(0, -24px, 0);
+        opacity: 0;
+    }
+    100% {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
 }
+
 
 
 /* Placeholders
@@ -112,7 +118,7 @@ $monospace: Consolas, Monaco, 'Andale Mono', monospace;
 }
 
 %transition-300ms {
-	@include transition(all 0.3s);
+	transition: all 0.3s;
 }
 
 %standard-margin {
@@ -148,6 +154,7 @@ body {
 }
 
 .container {
+	position: relative;
     width: 100%;
     margin: 0 auto;
     max-width: $container-width;
@@ -157,27 +164,22 @@ body {
 	position: relative;
 	width: 100%;
 	padding: 5%;
-	@include transition(transform 0.3s);
-	transform: translate(0,0);
+	transition: transform 0.3s;
+	transform: translate3d(0, 0, 0);
 	background: $primary-light;
 	&.slide  {
-		transform: translate(-$sidebar-width-mobile, 0);
+		transform: translate3d(-$sidebar-width-mobile, 0, 0);
 	}
 	@media screen and (min-width: nth($breakpoints, 2)) {
 		&.slide  {
-			transform: translate(-$sidebar-width, 0);
+			transform: translate3d(-$sidebar-width, 0, 0);
 		}
 	}
 
 	> * {
-		opacity: 1;
-		@include transition(opacity 0.3s);
+		animation: fade-in 0.3s;
 	}
 
-	// for fadein effect
-	.fadein & > * {
-		opacity: 0;
-	}
 }
 
 .fade > * {
@@ -192,7 +194,7 @@ body {
 	opacity: 0;
 	width: 30px;
 	height: 30px;
-	@include transition(opacity 0.5s);
+	transition: opacity 0.5s;
 	.fade &,
 	.fadein & {
 		opacity: 1 !important;
@@ -214,7 +216,7 @@ body {
 		max-width: $sidebar-width;
 		margin-left: $container-width - $sidebar-width;
 	}
-	@include transition(opacity 0.3s);
+	transition: opacity 0.3s;
 }
 
 .site-title {
@@ -304,13 +306,20 @@ body {
 
 .cover-container {
 	position: relative;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
 }
 
 .page-template-page-cover-php {
+	.container {
+		display: table;
+	}
 	.sidebar {
 		position: relative;
-		margin-left: auto;
-		margin-right: auto;
+		display: inline-block;
+		margin: 0;
+		animation: slide-in 1s;
 	}
 	.content { display: none; }
 }
@@ -427,7 +436,7 @@ body {
 	line-height: 1.2;
 	padding-bottom: 10px;
 	a {
-		@include transition(color 0.2s);
+		transition: color 0.2s;
 		&:hover {
 			text-decoration: none;
 			color: darken($primary-color, 15%);

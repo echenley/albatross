@@ -29,14 +29,6 @@ function add_end_mark() {
 	}
 }
 
-function position_cover() {
-	var $cover_container = $('.cover-container'),
-		cover_height = $cover_container.outerHeight(),
-		window_height = $(window).height();
-	$cover_container.css('margin-top', (window_height - cover_height) / 2);
-}
-
-
 
 /* Responsivity
 ================================== */
@@ -143,9 +135,9 @@ function activate_internal_links() {
 		// allow command-click and control-click to open new tab
 		if (e.metaKey || e.ctrlKey) {  
 		    return;
-		} else {
-		    e.preventDefault();
 		}
+
+		e.preventDefault();
 
 		$('.current-menu-item').removeClass('current-menu-item');
 		$(this).parent().addClass('current-menu-item');
@@ -174,9 +166,8 @@ function activate_internal_links() {
 		// allow command-click and control-click to open new tab
 		if (e.metaKey || e.ctrlKey) {  
 		    return;
-		} else {
-		    e.preventDefault();
 		}
+		e.preventDefault();
 		var href = e.target.href;
 		load_new_page(href, false, true);
 	});
@@ -230,18 +221,10 @@ function load_new_page(url, popstate, toTop) {
 
 function init() {
 
-	// remove fade
-	$(window).load(function() {
-		$('html').removeClass('fadein');
-	});
 	// set onpopstate AND initial app state if there isn't one set (e.g. after reload)
 	set_history();
 	// setup responsive videos
 	responsive_video_setup();
-	// position cover vertically
-	if (current_theme_template === 'page-cover.php') {
-		position_cover();
-	}
 	// set special link behavior
 	activate_internal_links();
 
