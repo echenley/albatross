@@ -5,28 +5,11 @@
 ================================== */
 
 var site_url = albatross_vars.site_url,
-	current_theme_template = albatross_vars.current_theme_template,
 	$document = $(document),
 	$body = $('body'),
 	$dynamic = $('#dynamic'),
 	$sidebar = $('.sidebar'),
 	$all_videos = $('iframe[src*="//www.youtube.com"], iframe[src*="//player.vimeo.com"]');
-
-
-/* Page Setup
-================================== */
-
-// adds end mark to end of posts
-function add_end_mark() {
-	var $wrapper = $('.post-body'),
-		$last_element = $wrapper.children().last();
-
-	if ($last_element.is('p')) {
-		$last_element.append(' &#8718;');
-	} else {
-		$wrapper.append('<hr class="endpost">');
-	}
-}
 
 
 /* Responsivity
@@ -149,10 +132,6 @@ function init() {
 	responsive_video_setup();
 	// set special link behavior
 	activate_internal_links();
-
-	if (current_theme_template === 'single.php') {
-		add_end_mark();
-	}
 
 }
 

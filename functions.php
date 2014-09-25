@@ -66,20 +66,10 @@ function albatross_title($title, $sep, $seplocation) {
 }
 
 
-// ADD CURRENT THEME TEMPLATE GLOBAL
-
-add_filter('template_include', 'albatross_template_include', 1000);
-function albatross_template_include($t){
-    $GLOBALS['current_theme_template'] = basename($t);
-    return $t;
-}
-
-
 // ENQUEUE JAVASCRIPT, FONTS AND CSS
 
 add_action('wp_enqueue_scripts', 'albatross_scripts', 11);
 function albatross_scripts() {
-    global $numpages, $current_theme_template;
 
     // CSS //
     wp_enqueue_style('albatross-fonts', albatross_font_url(), array(), null);
@@ -88,8 +78,7 @@ function albatross_scripts() {
     // Javascript //
     wp_enqueue_script('albatross-scripts', get_template_directory_uri() . '/library/js/scripts-min.js', array('jquery'), '', true);
     wp_localize_script('albatross-scripts', 'albatross_vars', array(
-        'site_url' => get_site_url(),
-        'current_theme_template' => $current_theme_template
+        'site_url' => get_site_url()
     ));
 
     if (is_singular() && comments_open() && get_option('thread_comments')) {
