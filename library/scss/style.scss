@@ -82,7 +82,7 @@ $monospace: Consolas, Monaco, 'Andale Mono', monospace;
 
 @keyframes slide-in {
     0% {
-        transform: translate3d(0, -24px, 0);
+        transform: translate3d(0, -10px, 0);
         opacity: 0;
     }
     100% {
@@ -314,7 +314,7 @@ body {
 		position: relative;
 		display: inline-block;
 		margin: 0;
-		animation: slide-in 1s;
+		animation: slide-in 0.5s;
 	}
 	.content { display: none; }
 }

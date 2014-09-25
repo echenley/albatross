@@ -96,10 +96,9 @@ function activate_internal_links() {
 		set_menu_toggle();
 	}
 
-	var not = ':not(.menu-toggle)';
+	var not = ':not(.menu-toggle):not(a[href*="/wp-content/"])';
 
 	var internal_links = 'a[href^="' + site_url + '"]' + not + ', ' +
-		'a[href^="http://stinky.local"]' + not + ', ' +
 		'a[href^="/"]' + not + ', ' +
 		'a[href^="./"]' + not + ', ' +
 		'a[href^="../"]' + not;
