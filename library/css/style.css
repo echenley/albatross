@@ -376,8 +376,6 @@ body {
   border-left: 0.5rem solid rgba(76, 101, 109, 0.8);
   font-size: 0.9em;
   font-style: italic; }
-  .post-info:not(:first-child) {
-    margin-left: 6px; }
 
 /* Headings
 ====================================== */

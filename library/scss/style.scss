@@ -425,9 +425,6 @@ body {
 	font-size: 0.9em;
 	font-style: italic;
 	@extend %border-radius;
-	&:not(:first-child) {
-		margin-left: 6px;
-	}
 }
 
 
