@@ -1,7 +1,6 @@
 <?php get_header(); ?>
 <?php get_template_part('partials/sidebar'); ?>
 <?php get_template_part('partials/content-top'); ?>
-<?php get_template_part('partials/spinner'); ?>
 <?php get_template_part('partials/content-header'); ?>
 
 <div class="post">

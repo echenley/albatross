@@ -184,7 +184,7 @@ body {
 	}
 
 	> * {
-		transition: opacity 0.5s;
+		transition: opacity 0.2s;
 		animation: slide-in 0.5s;
 	}
 
@@ -192,22 +192,6 @@ body {
 		opacity: 0;
 	}
 }
-
-.spinner {
-	position: fixed;
-		top: 200px;
-		left: 50%;
-	margin-left: -15px;
-	opacity: 0;
-	width: 30px;
-	height: 30px;
-	transition: opacity 0.5s;
-	animation: fade-out 0.5s;
-	.fade & {
-		opacity: 1 !important;
-	}
-}
-
 
 /* Sidebar
 ====================================== */
@@ -641,10 +625,10 @@ hr.endpost {
 
 .icon {
 	display: inline-block;
-	width: 17px;
-	height: 17px;
+	width: 15px;
+	height: 15px;
 	padding-right: 5px;
-	vertical-align: middle;
+	vertical-align: -2px;
 }
 
 iframe {

@@ -134,7 +134,7 @@ function activate_internal_links() {
 				window.location.href = href;
 			}
 			
-		}, 200);
+		}, 100);
 
 	});
 }
