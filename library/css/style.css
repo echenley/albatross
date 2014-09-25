@@ -160,11 +160,11 @@ html {
 
 body {
   font-family: "Open Sans", sans-serif;
-  font-size: 100%;
+  font-size: 92%;
   font-weight: 300; }
   @media screen and (min-width: 767px) {
     body {
-      font-size: 110.0%; } }
+      font-size: 101.2%; } }
 
 .container {
   position: relative;
