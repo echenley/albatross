@@ -96,11 +96,13 @@ function activate_internal_links() {
 		set_menu_toggle();
 	}
 
-	var internal_links = 'a[href^="' + site_url + '"]:not(.menu-toggle), ' +
-		'a[href^="http://stinky.local"]:not(.menu-toggle), ' +
-		'a[href^="/"]:not(.menu-toggle), ' +
-		'a[href^="./"]:not(.menu-toggle), ' +
-		'a[href^="../"]:not(.menu-toggle)';
+	var not = ':not(.menu-toggle):not(.attachment-thumbnail), '
+
+	var internal_links = 'a[href^="' + site_url + '"]' + not +
+		'a[href^="http://stinky.local"]' + not +
+		'a[href^="/"]' + not +
+		'a[href^="./"]' + not +
+		'a[href^="../"]' + not;
 
 	// main menu behavior
 	$document.on('click', internal_links, function(e) {
