@@ -112,6 +112,8 @@ function activate_internal_links() {
 
 		e.preventDefault();
 
+		var href = e.target.href || e.currentTarget.href;
+
 		$('.current-menu-item').removeClass('current-menu-item');
 		$(this).parent().addClass('current-menu-item');
 
@@ -123,11 +125,11 @@ function activate_internal_links() {
 				$dynamic.removeClass('slide');
 				// wait for slide, then load the new page
 				setTimeout(function() { 
-					window.location.href = e.currentTarget.href;
+					window.location.href = href;
 				}, 300);
 			} else {
 				// just load that shit
-				window.location.href = e.currentTarget.href;
+				window.location.href = href;
 			}
 			
 		}, 200);
