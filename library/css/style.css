@@ -286,7 +286,8 @@ body {
   text-align: center; }
 
 .page-template-page-cover-php .container {
-  display: table; }
+  display: table;
+  height: 100vh; }
 .page-template-page-cover-php .sidebar {
   position: relative;
   display: inline-block;
