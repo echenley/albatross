@@ -466,16 +466,16 @@ tbody tr {
     background: rgba(218, 219, 230, 0.1); }
 
 a {
-  color: #61818b;
+  color: #56737c;
   text-decoration: none; }
   a:hover {
     text-decoration: underline; }
 
 .post-body a {
-  border-bottom: 1px dotted #61818b; }
+  border-bottom: 1px dotted #56737c; }
   .post-body a:hover {
     text-decoration: none;
-    border-bottom: 1px solid #61818b; }
+    border-bottom: 1px solid #56737c; }
 
 abbr {
   border-bottom: 1px dotted #000; }
