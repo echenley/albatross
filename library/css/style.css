@@ -471,12 +471,6 @@ a {
   a:hover {
     text-decoration: underline; }
 
-.post-body a {
-  border-bottom: 1px dotted #56737c; }
-  .post-body a:hover {
-    text-decoration: none;
-    border-bottom: 1px solid #56737c; }
-
 abbr {
   border-bottom: 1px dotted #000; }
 
