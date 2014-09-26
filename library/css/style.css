@@ -161,7 +161,8 @@ html {
 body {
   font-family: "Open Sans", sans-serif;
   font-size: 92%;
-  font-weight: 300; }
+  font-weight: 300;
+  font-smoothing: antialiased; }
   @media screen and (min-width: 767px) {
     body {
       font-size: 101.2%; } }
@@ -465,10 +466,16 @@ tbody tr {
     background: rgba(218, 219, 230, 0.1); }
 
 a {
-  color: #4C656D;
+  color: #61818b;
   text-decoration: none; }
   a:hover {
     text-decoration: underline; }
+
+.post-body a {
+  border-bottom: 1px dotted #61818b; }
+  .post-body a:hover {
+    text-decoration: none;
+    border-bottom: 1px solid #61818b; }
 
 abbr {
   border-bottom: 1px dotted #000; }
